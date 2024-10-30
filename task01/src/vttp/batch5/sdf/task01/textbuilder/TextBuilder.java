@@ -23,7 +23,7 @@ public class TextBuilder {
         return replaceQuotations(getTopFiveEntrys(new BikeEntryComparator()));
     }
 
-    public List<BikeEntry> getTopFiveEntrys(BikeEntryComparator bikeEntryComparator){
+    private List<BikeEntry> getTopFiveEntrys(BikeEntryComparator bikeEntryComparator){
         return bikeEntries.stream().sorted(bikeEntryComparator.reversed()).limit(5).collect(Collectors.toList());
     }
 

@@ -134,8 +134,6 @@ public class Move {
                 }
             }
         }
-        System.out.println(numOfX);
-        System.out.println(numOfO);
         return (numOfO - numOfX == 1) || (numOfO == 0 && numOfX == 0) || (numOfO == numOfX);
     }
 

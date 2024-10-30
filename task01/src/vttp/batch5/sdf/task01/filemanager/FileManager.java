@@ -10,8 +10,6 @@ import vttp.batch5.sdf.task01.models.BikeEntry;
 
 public class FileManager {
     private final String fileName = "day.csv";
-    private final String path = "/Users/remuslum/Downloads/vttp_sdf/vttp_b5_assessment_template/task01";
-    private final String separator = File.separator;
 
     public FileManager(){
         
@@ -19,7 +17,7 @@ public class FileManager {
 
     public List<BikeEntry> readFile() throws IOException {
         List<BikeEntry> fileContents = new ArrayList<>();
-        File file = new File(path + separator + fileName);
+        File file = new File(fileName);
         FileReader fileReader = new FileReader(file);
         BufferedReader br = new BufferedReader(fileReader);
         String line = "";

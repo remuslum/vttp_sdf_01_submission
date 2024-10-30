@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Board {
-    private final String PATH = "/Users/remuslum/Downloads/vttp_sdf/vttp_b5_assessment_template/task02";
     private final int SIZE = 3;
     private final char[][] board = new char[SIZE][SIZE];
 
@@ -16,7 +15,7 @@ public class Board {
 
     public char[][] generateBoard(String textFile){
         try {
-            File file = new File(PATH + File.separator + textFile);
+            File file = new File(textFile);
             FileReader fileReader = new FileReader(file);
             BufferedReader br = new BufferedReader(fileReader);
             StringBuilder sb = new StringBuilder();
@@ -48,11 +47,11 @@ public class Board {
 
     public String printBoard(char[][] gameBoard){
         StringBuilder sb = new StringBuilder();
-        for(char[] row:gameBoard){
-            for(char space:row){
+        for (char[] row : gameBoard) {
+            for (char space : row) {
                 sb.append(space);
             }
-            sb.append("\n");
+            sb.append("\n"); 
         }
         return sb.toString();
     }

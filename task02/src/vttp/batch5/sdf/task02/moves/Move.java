@@ -1,4 +1,5 @@
 package vttp.batch5.sdf.task02.moves;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,31 +13,36 @@ public class Move {
     public String generateUtility(){
         List<List<Integer>> allEmptyPositions = this.getEmptyPositions();
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < allEmptyPositions.size(); i++){
-            List<Integer> currentPosition = allEmptyPositions.get(i);
-            int bestUtility = 0;
-            char[][] newBoard = place('X', currentPosition);
-            if(evaluateRowWin(newBoard) == 1 || evaluateColumnWin(newBoard) == 1 || evaluateDiagonalWin(newBoard) == 1){
-                bestUtility = 1;
-            } else {
-                List<List<Integer>> remainingEmptyPositions = new ArrayList<>();
-                remainingEmptyPositions.addAll(allEmptyPositions.subList(0, i));
-                remainingEmptyPositions.addAll(allEmptyPositions.subList(i+1, allEmptyPositions.size()));
-                for(List<Integer> remainingPosition:remainingEmptyPositions){
-                    char[][] newBoard2 = place('O', remainingPosition);
-                    if(evaluateRowWin(newBoard2) == -1 || evaluateColumnWin(newBoard2) == -1 || evaluateDiagonalWin(newBoard2) == -1){
-                        bestUtility = -1;
+        if(isMyTurn(board)){
+            for(int i = 0; i < allEmptyPositions.size(); i++){
+                List<Integer> currentPosition = allEmptyPositions.get(i);
+                int bestUtility = 0;
+                char[][] newBoard = place('X', currentPosition);
+                if(evaluateRowWin(newBoard) == 1 || evaluateColumnWin(newBoard) == 1 || evaluateDiagonalWin(newBoard) == 1){
+                    bestUtility = 1;
+                } else {
+                    List<List<Integer>> remainingEmptyPositions = new ArrayList<>();
+                    remainingEmptyPositions.addAll(allEmptyPositions.subList(0, i));
+                    remainingEmptyPositions.addAll(allEmptyPositions.subList(i+1, allEmptyPositions.size()));
+                    for(List<Integer> remainingPosition:remainingEmptyPositions){
+                        char[][] newBoard2 = place('O', remainingPosition);
+                        if(evaluateRowWin(newBoard2) == -1 || evaluateColumnWin(newBoard2) == -1 || evaluateDiagonalWin(newBoard2) == -1){
+                            bestUtility = -1;
+                        }
                     }
                 }
-
+                sb.append("y=");
+                sb.append(currentPosition.get(1));
+                sb.append(", x=");
+                sb.append(currentPosition.get(0));
+                sb.append(", utility=");
+                sb.append(bestUtility);
+                if(i != allEmptyPositions.size() - 1){
+                    sb.append("\n");
+                }
             }
-            sb.append("y=");
-            sb.append(currentPosition.get(1));
-            sb.append(", x=");
-            sb.append(currentPosition.get(0));
-            sb.append(", utility=");
-            sb.append(bestUtility);
-            sb.append("\n");
+        } else {
+            sb.append("Invalid board! There are more X's than O's present");
         }
         return sb.toString();
     }
@@ -114,6 +120,23 @@ public class Move {
             };
         }
         return 0;
+    }
+
+    private boolean isMyTurn(char[][] board){
+        int numOfX = 0;
+        int numOfO = 0;
+        for(char[] row: board){
+            for (char space: row){
+                if(space == 'X'){
+                    numOfX++;
+                } else if (space == 'O'){
+                    numOfO++;
+                }
+            }
+        }
+        System.out.println(numOfX);
+        System.out.println(numOfO);
+        return (numOfO - numOfX == 1) || (numOfO == 0 && numOfX == 0) || (numOfO == numOfX);
     }
 
     

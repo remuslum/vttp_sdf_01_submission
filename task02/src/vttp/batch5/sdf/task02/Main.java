@@ -12,7 +12,10 @@ public class Main {
 		char[][] gameBoard = board.generateBoard(args[0]);
 		Move move = new Move(gameBoard);
 		List<List<Integer>> emptyPositions = move.getEmptyPositions();
-		
-		System.out.println(move.place('X', emptyPositions.get(0))[0]);
+		System.out.println(emptyPositions);
+
+		System.out.println(move.generateUtility());
+
+
 	}
 }
